@@ -9,7 +9,7 @@ class SessionController {
       .select('name')
       .first();
     if (!ong) {
-      return res.status(401).json({ error: 'Ong not found' });
+      return res.status(401).json({ error: 'ONG not found' });
     }
 
     return res.json(ong);
