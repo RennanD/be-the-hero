@@ -3,8 +3,8 @@ exports.up = (knex) => {
     table.increments();
 
     table.string('title').notNullable();
-    table.string('desciption').notNullable();
-    table.string('price').notNullable();
+    table.string('description').notNullable();
+    table.decimal('price').notNullable();
 
     table.string('ong_id').notNullable();
 
