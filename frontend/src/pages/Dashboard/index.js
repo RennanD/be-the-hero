@@ -6,12 +6,14 @@ import { Container, AddButton, LogoutButton } from './styles';
 import logoImg from '../../assets/logo.svg';
 
 export default function Dashboard({ history }) {
+  const ongName = localStorage.getItem('ong_name');
+
   return (
     <Container>
       <header>
         <img src={logoImg} alt="Be The Hero" />
 
-        <span>Bem vinda, Apipa</span>
+        <span>Bem vinda, {ongName}</span>
 
         <AddButton
           type="button"
