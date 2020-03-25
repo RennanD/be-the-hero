@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import { FiLogIn } from 'react-icons/fi';
 
 import { Container, FormSection } from './styles';
 
-import { Button } from '../../styles/global';
+import { Button, LinkButton } from '../../styles/global';
 
 import heroesImg from '../../assets/heroes.png';
 import logoImg from '../../assets/logo.svg';
@@ -22,10 +21,10 @@ export default function Logon() {
           <input placeholder="Sua ID" />
           <Button type="submit">Entrar</Button>
 
-          <Link to="/register">
+          <LinkButton to="/register">
             <FiLogIn size={16} color="#e02041" />
             Não tenho cadastro
-          </Link>
+          </LinkButton>
         </form>
       </FormSection>
       <img src={heroesImg} alt="Heroes" />

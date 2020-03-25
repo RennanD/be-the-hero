@@ -8,7 +8,7 @@ export const Container = styled.div`
 
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 `;
 
 export const FormSection = styled.section`
@@ -22,25 +22,6 @@ export const FormSection = styled.section`
     h1 {
       font-size: 32px;
       margin-bottom: 32px;
-    }
-
-    svg {
-      margin-right: 5px;
-    }
-
-    a {
-      display: flex;
-      align-items: center;
-      margin-top: 40px;
-      color: #2192f6;
-      font-size: 18px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: opacity 0.2s;
-
-      &:hover {
-        opacity: 0.8;
-      }
     }
   }
 `;

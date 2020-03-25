@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export default createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
@@ -53,5 +54,24 @@ export const Button = styled.button`
 
   &:hover {
     filter: brightness(90%);
+  }
+`;
+
+export const LinkButton = styled(Link)`
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+  color: #2192f6;
+  font-size: 18px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  svg {
+    margin-right: 5px;
   }
 `;
