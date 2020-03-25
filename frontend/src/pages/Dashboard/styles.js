@@ -4,7 +4,7 @@ import { Button } from '../../styles/global';
 
 export const Container = styled.div`
   width: 100%;
-  max-width: 1180px;
+  max-width: 1080px;
   padding: 0 32px;
   margin: 32px auto;
 
