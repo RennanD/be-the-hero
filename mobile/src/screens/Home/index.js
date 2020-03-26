@@ -32,7 +32,9 @@ export default function Home() {
           Total de <Bold>0 casos</Bold>{' '}
         </HeaderText>
       </Header>
+
       <Title>Bem vindo!</Title>
+
       <Description>Escolha um dos casos abaixo e salve o dia.</Description>
 
       <IncidentList
