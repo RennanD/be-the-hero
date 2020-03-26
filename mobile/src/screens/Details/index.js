@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Feather';
 
 import email from 'react-native-email';
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import {
   Container,
@@ -27,16 +27,19 @@ import logo from '~/assets/logo.png';
 
 export default function Details() {
   const { goBack } = useNavigation();
-  const messege =
-    'Olá Apipa, estou entrando em contato pois gostaria de ajudar no caso "Caso 1" com o valor de "R$120" ';
+  const { params } = useRoute();
+  const { incident } = params;
+  const messege = `Olá ${incident.name}, estou entrando em contato pois gostaria de ajudar no caso *${incident.title}* com o valor de *${incident.priceFormatted}* `;
 
   function sendWhatsapp() {
-    Linking.openURL(`whatsapp://send?phone=5586995172761&text=${messege}`);
+    Linking.openURL(
+      `whatsapp://send?phone=55${incident.whatsapp}&text=${messege}`
+    );
   }
 
   async function sendMail() {
-    email('rennan@dombarreto.com', {
-      subject: 'Herói do caso: Gatinho resgatado',
+    email(incident.email, {
+      subject: `Herói do caso: ${incident.title}`,
       body: messege,
     }).catch();
   }
@@ -52,13 +55,18 @@ export default function Details() {
 
       <IncidentCard>
         <IncidentProp style={{ marginTop: 0 }}>ONG: </IncidentProp>
-        <IncidentValue>Apipa</IncidentValue>
+        <IncidentValue>
+          {incident.name} ONG de {incident.city} - {incident.uf}{' '}
+        </IncidentValue>
 
         <IncidentProp>Caso: </IncidentProp>
-        <IncidentValue>Caso teste</IncidentValue>
+        <IncidentValue>{incident.title}</IncidentValue>
+
+        <IncidentProp>Descrição: </IncidentProp>
+        <IncidentValue>{incident.description}</IncidentValue>
 
         <IncidentProp>Preço: </IncidentProp>
-        <IncidentValue>$120 R$</IncidentValue>
+        <IncidentValue>{incident.priceFormatted}</IncidentValue>
       </IncidentCard>
 
       <ContactCard>
