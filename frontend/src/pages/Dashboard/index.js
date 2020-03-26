@@ -1,12 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiPower, FiTrash2 } from 'react-icons/fi';
 
 import { Container, AddButton, LogoutButton } from './styles';
 
 import logoImg from '../../assets/logo.svg';
 
+import api from '../../services/api';
+
 export default function Dashboard({ history }) {
+  const [incidents, setIncidents] = useState([]);
+
   const ongName = localStorage.getItem('ong_name');
+  const ongId = localStorage.getItem('ong_id');
+
+  useEffect(() => {
+    async function loadIncidents() {
+      const response = await api.get('/profile', {
+        headers: {
+          Authorization: ongId,
+        },
+      });
+
+      const data = response.data.map((incident) => ({
+        ...incident,
+        priceFormated: Intl.NumberFormat('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        }).format(incident.price),
+      }));
+
+      setIncidents(data);
+    }
+
+    loadIncidents();
+  }, [ongId]);
 
   return (
     <Container>
@@ -32,65 +59,22 @@ export default function Dashboard({ history }) {
       <h1>Casos cadastrados</h1>
 
       <ul>
-        <li>
-          <strong>CASO: </strong>
-          <p>Caso teste</p>
+        {incidents.map((incident) => (
+          <li key={incident.id}>
+            <strong>CASO: </strong>
+            <p>{incident.title}</p>
 
-          <strong>DESCRIÇÃO: </strong>
-          <p>Descrição teste</p>
+            <strong>DESCRIÇÃO: </strong>
+            <p>{incident.description}</p>
 
-          <strong>VALOR: </strong>
-          <p>R$ 120,00</p>
+            <strong>VALOR: </strong>
+            <p>{incident.priceFormated}</p>
 
-          <button type="button">
-            <FiTrash2 size={20} color="#a8a8b3" />
-          </button>
-        </li>
-
-        <li>
-          <strong>CASO: </strong>
-          <p>Caso teste</p>
-
-          <strong>DESCRIÇÃO: </strong>
-          <p>Descrição teste</p>
-
-          <strong>VALOR: </strong>
-          <p>R$ 120,00</p>
-
-          <button type="button">
-            <FiTrash2 size={20} color="#a8a8b3" />
-          </button>
-        </li>
-
-        <li>
-          <strong>CASO: </strong>
-          <p>Caso teste</p>
-
-          <strong>DESCRIÇÃO: </strong>
-          <p>Descrição teste</p>
-
-          <strong>VALOR: </strong>
-          <p>R$ 120,00</p>
-
-          <button type="button">
-            <FiTrash2 size={20} color="#a8a8b3" />
-          </button>
-        </li>
-
-        <li>
-          <strong>CASO: </strong>
-          <p>Caso teste</p>
-
-          <strong>DESCRIÇÃO: </strong>
-          <p>Descrição teste</p>
-
-          <strong>VALOR: </strong>
-          <p>R$ 120,00</p>
-
-          <button type="button">
-            <FiTrash2 size={20} color="#a8a8b3" />
-          </button>
-        </li>
+            <button type="button">
+              <FiTrash2 size={20} color="#a8a8b3" />
+            </button>
+          </li>
+        ))}
       </ul>
     </Container>
   );
