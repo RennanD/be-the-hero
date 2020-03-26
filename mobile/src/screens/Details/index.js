@@ -1,5 +1,9 @@
 import React from 'react';
+import { Linking } from 'react-native';
+
 import Icon from 'react-native-vector-icons/Feather';
+
+import email from 'react-native-email';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -23,6 +27,19 @@ import logo from '~/assets/logo.png';
 
 export default function Details() {
   const { goBack } = useNavigation();
+  const messege =
+    'Olá Apipa, estou entrando em contato pois gostaria de ajudar no caso "Caso 1" com o valor de "R$120" ';
+
+  function sendWhatsapp() {
+    Linking.openURL(`whatsapp://send?phone=5586995172761&text=${messege}`);
+  }
+
+  async function sendMail() {
+    email('rennan@dombarreto.com', {
+      subject: 'Herói do caso: Gatinho resgatado',
+      body: messege,
+    }).catch();
+  }
 
   return (
     <Container>
@@ -50,11 +67,11 @@ export default function Details() {
         <HeroDescription>Entre em contato</HeroDescription>
 
         <Actions>
-          <ActionButton>
+          <ActionButton onPress={sendWhatsapp}>
             <ActionButtonText>Whatsapp</ActionButtonText>
           </ActionButton>
 
-          <ActionButton>
+          <ActionButton onPress={sendMail}>
             <ActionButtonText>E-mail</ActionButtonText>
           </ActionButton>
         </Actions>
