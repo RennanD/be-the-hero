@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { FiArrowLeft } from 'react-icons/fi';
 
@@ -8,7 +9,43 @@ import { LinkButton, Button } from '../../styles/global';
 
 import logoImg from '../../assets/logo.svg';
 
+import api from '../../services/api';
+
 export default function NewIncident() {
+  const ongId = localStorage.getItem('ong_id');
+
+  const history = useHistory();
+
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [price, setPrice] = useState('');
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    try {
+      await api.post(
+        '/incidents',
+        {
+          title,
+          description,
+          price,
+        },
+        {
+          headers: {
+            Authorization: ongId,
+          },
+        }
+      );
+
+      alert('Caso cadastrado com sucesso');
+
+      history.push('/dashboard');
+    } catch (err) {
+      alert('Verifique se preencheu os campos corretamente');
+    }
+  }
+
   return (
     <Container>
       <Content>
@@ -28,10 +65,22 @@ export default function NewIncident() {
           </LinkButton>
         </section>
 
-        <form>
-          <input placeholder="Título do caso" />
-          <textarea placeholder="Descrição" />
-          <input placeholder="Valor em reais" />
+        <form onSubmit={handleSubmit}>
+          <input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Título do caso"
+          />
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Descrição"
+          />
+          <input
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            placeholder="Valor em reais"
+          />
 
           <Button type="submit">Cadastrar</Button>
         </form>
